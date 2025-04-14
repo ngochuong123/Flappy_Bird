@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe build active file",
+			"command": "C:/Users/User/Desktop/game1/MinGW/bin/g++.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"C:/Users/User/Desktop/game1/src/*.cpp",
+				"-IC:/Users/User/Desktop/game1/header/",
+				"-IC:/Users/User/Desktop/game1/MinGW/include/",
+				"-lmingw32",
+				"-lSDL2main",
+				"-lSDL2",
+				"-lSDL2_image",
+				"-lSDL2_mixer",
+				"-lSDL2_ttf",
+				"-o",
+				"C:/Users/User/Desktop/game1/game1.exe"
+			],
+			"options": {
+				"cwd": "C:/Users/User/Desktop/game1/MinGW/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: C:/Users/ADMIN/Desktop/games1/MinGW/bin/g++.exe"
+		}
+	]
+}
