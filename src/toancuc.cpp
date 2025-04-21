@@ -10,6 +10,7 @@ const int Min = 80;
 const int Max = 300;
 int score = 0;
 int scoreMax = 0;
+int volume = MIX_MAX_VOLUME / 2;
 //cột
     const int Col_W = 70;
     int Col_X = SCREEN_WIDTH - Col_W;

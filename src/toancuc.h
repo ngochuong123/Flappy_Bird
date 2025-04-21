@@ -10,6 +10,7 @@
 #include <vector>
 #include <cstdlib> 
 #include <ctime>
+#include <fstream> 
 
 using namespace std;
 // Các thông số cửa sổổ
@@ -22,6 +23,7 @@ extern const int Min;
 extern const int Max;
 extern int score;
 extern int scoreMax;
+extern int volume;
 // các thông số của cột
 extern const int Col_W;
 extern int Col_X;

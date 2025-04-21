@@ -166,7 +166,27 @@ void hien_diemso(int score, SDL_Texture* textTexture, int scoreX, int scoreY, in
     SDL_Rect textRect = {scoreX, scoreY, scoreW, scoreH}; 
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
 }
-
+int loadHighestScore() {
+    ifstream file("highest_score.txt");
+    int highestScore = 0;
+    if (file.is_open()) {
+        file >> highestScore;
+        file.close();
+    }
+    return highestScore;
+}
+void saveHighestScore(int score) {
+    ofstream file("highest_score.txt");
+    if (file.is_open()) {
+        file << score;
+        file.close();
+    }
+}
+void hien_settings(SDL_Renderer* renderer, SDL_Texture* settingsTexture, SDL_Rect settingsRect, SDL_Rect volumeUpRect, SDL_Rect volumeDownRect) {
+    SDL_RenderCopy(renderer, settingsTexture, NULL, &settingsRect);
+    SDL_RenderCopy(renderer, settingsTexture, NULL, &volumeUpRect);
+    SDL_RenderCopy(renderer, settingsTexture, NULL, &volumeDownRect);
+}
 void exit(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
