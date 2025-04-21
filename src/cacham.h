@@ -27,6 +27,7 @@ void hien_menu ( SDL_Texture* menu, SDL_Texture* start, SDL_Rect startRect);
 void hien_gameover(SDL_Renderer*renderer, SDL_Texture* gameover, SDL_Texture* restart, SDL_Rect restartRect);
 
 void hien_diemso(int score, SDL_Texture* textTexture, int scoreX, int scoreY, int scoreW, int scoreH);
-
+int loadHighestScore() ;
+void saveHighestScore(int score) ;
 void exit();
 #endif

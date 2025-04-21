@@ -24,14 +24,14 @@ void nhap_du_lieu(){
     menu = loadTexture("C:/Users/User/Desktop/game1/src/image/22.png", renderer);
     start = loadTexture("C:/Users/User/Desktop/game1/src/image/start.png", renderer);
 
-    hinh_anh_player("C:/Users/User/Desktop/game1/src/image/cot1.png" , &cotTop , 129, 193, 212);
-    hinh_anh_player("C:/Users/User/Desktop/game1/src/image/cot1.png" , &cotBot , 129, 193, 212);
+    cotTop = loadTexture("C:/Users/User/Desktop/game1/src/image/cot12.jpg", renderer);
+    cotBot = loadTexture("C:/Users/User/Desktop/game1/src/image/cot123.jpg", renderer);
     hinh_anh_player("C:/Users/User/Desktop/game1/src/image/player1.png" , &player1 , Red, Green, Blue);
     hinh_anh_player("C:/Users/User/Desktop/game1/src/image/player2.png" , &player2 , Red, Green, Blue);
 
     hinh_anh_player("C:/Users/User/Desktop/game1/src/image/gameover.png", &gameover, Red1, Green1, Blue1 );
     restart = loadTexture("C:/Users/User/Desktop/game1/src/image/restart.png", renderer);
-
+    scoreMax = loadHighestScore();
     player = player1;
     startRect = {startX , startY, startW, startH };
     restartRect = {restartX, restartY, restartW, restartH};
@@ -41,6 +41,7 @@ void nhap_du_lieu(){
 void chuongtrinh(){
     srand(std::time(0));
     //Điều khiển
+    
     while (running) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
@@ -92,6 +93,10 @@ void chuongtrinh(){
             again = false;
             xoa = true;
             Mix_HaltMusic();
+            if (score > scoreMax) {
+                scoreMax = score;
+                saveHighestScore(scoreMax); // Save the new highest score to the file
+            }
         }
         if(playerX + playerW >= Col_X && playerX <= Col_X + Col_W){
             if(!vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1) && cd1 )
