@@ -97,6 +97,7 @@ SDL_Texture* cotTop = NULL;
 SDL_Texture* cotBot = NULL; 
 SDL_Texture* gameover = NULL;
 SDL_Texture* restart = NULL;
+SDL_Texture* dung = NULL;
 SDL_Event e;
 
 SDL_Rect startRect = {0, 0 ,0 ,0};

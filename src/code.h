@@ -5,5 +5,8 @@
 #include "cacham.h"
 
 void nhap_du_lieu();
+void vaoGame(int mouseX, int mouseY);
+void trongGame();
+void playGame();
 void chuongtrinh();
 #endif

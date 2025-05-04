@@ -21,7 +21,7 @@ void nhap_du_lieu(){
     nen_nhac = Mix_LoadMUS("C:/Users/User/Desktop/game1/src/amthanh/nen.mp3");
     background = loadTexture("C:/Users/User/Desktop/game1/src/image/backround1.png", renderer);
     SDL_QueryTexture(background, NULL, NULL, &backgroundWidth, &backgroundHeight);
-    menu = loadTexture("C:/Users/User/Desktop/game1/src/image/22.png", renderer);
+    menu = loadTexture("C:/Users/User/Desktop/game1/src/image/11.png", renderer);
     start = loadTexture("C:/Users/User/Desktop/game1/src/image/start.png", renderer);
 
     cotTop = loadTexture("C:/Users/User/Desktop/game1/src/image/cot12.jpg", renderer);
@@ -38,10 +38,73 @@ void nhap_du_lieu(){
     chuyen_canh = menu;
     return;
 }
+void vaoGame(int mouseX, int mouseY){
+    if (chuot(mouseX, mouseY, startRect)) {
+        if (chuyen_canh == menu) {
+            chuyen_canh = background;
+            Col_H = Min + rand() % Max/2;
+            Col_H1 = Min + rand() % Max/2;
+            Mix_PlayMusic(nen_nhac, -1);
+        }
+    }
+    if (chuot(mouseX, mouseY, restartRect) && xoa) {
+        again = true;
+        reset(&playerX, &playerY, &Col_X, &Col_X1, &backgroundX);
+        xoa = false;
+        va_amthanh = true;
+        Col_H = Min + rand() % Max/2;
+        Col_H1 = Min + rand() % Max/2;
+        Mix_PlayMusic(nen_nhac, -1);
+        if(score > scoreMax) scoreMax = score;
+        score = 0 ;
+    }
+    if (again && chuyen_canh == background) {
+        playerVelocity = jumpForce;
+        Mix_PlayChannel(-1, nhay, 0);
+    }
+}
+void trongGame(){
+    if (chuyen_canh == menu) {
+        chuyen_canh = background;
+        Col_H = Min + rand() % Max/2;
+        Col_H1 = Min + rand() % Max/2;
+        Mix_PlayMusic(nen_nhac, -1);
+    }
+    if (again)
+        playerVelocity = jumpForce;
+        if(va_amthanh)
+        Mix_PlayChannel(-1, nhay, 0);
+}
+void playGame(){
+    if (vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1)) {
+        if(va_amthanh){
+            Mix_PlayChannel(-1, va, 0);
+        }
+        va_amthanh = false;
+        again = false;
+        xoa = true;
+        Mix_HaltMusic();
+        if (score > scoreMax) {
+            scoreMax = score;
+            saveHighestScore(scoreMax); 
+        }
+    }
+    if(playerX + playerW >= Col_X && playerX <= Col_X + Col_W){
+        if(!vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1) && cd1 )
+            score++;
+            if(cd1){Mix_PlayChannel(-1, congdiem, 0);}
+            cd1 = false;
+    }else cd1 = true;
+    if(playerX + playerW >= Col_X1 && playerX <= Col_X1 + Col_W){
+        if(!vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1) && cd2)
+            score++;
+            if(cd2){Mix_PlayChannel(-1, congdiem, 0);}
+            cd2 = false;
+    }else cd2 = true;
+}
 void chuongtrinh(){
     srand(std::time(0));
     //Điều khiển
-    
     while (running) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
@@ -49,67 +112,12 @@ void chuongtrinh(){
             } else if (e.type == SDL_MOUSEBUTTONDOWN) {
                 int mouseX = e.button.x;
                 int mouseY = e.button.y;
-                if (chuot(mouseX, mouseY, startRect)) {
-                    if (chuyen_canh == menu) {
-                        chuyen_canh = background;
-                        Col_H = Min + rand() % Max/2;
-                        Col_H1 = Min + rand() % Max/2;
-                        Mix_PlayMusic(nen_nhac, -1);
-                    }
-                }
-                if (chuot(mouseX, mouseY, restartRect) && xoa) {
-                    again = true;
-                    reset(&playerX, &playerY, &Col_X, &Col_X1, &backgroundX);
-                    xoa = false;
-                    va_amthanh = true;
-                    Col_H = Min + rand() % Max/2;
-                    Col_H1 = Min + rand() % Max/2;
-                    Mix_PlayMusic(nen_nhac, -1);
-                    if(score > scoreMax) scoreMax = score;
-                    score = 0 ;
-                }
-                if (again && chuyen_canh == background) {
-                    playerVelocity = jumpForce;
-                    Mix_PlayChannel(-1, nhay, 0);
-                }
+                vaoGame(mouseX, mouseY);
             } else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_SPACE) {
-                if (chuyen_canh == menu) {
-                    chuyen_canh = background;
-                    Col_H = Min + rand() % Max/2;
-                    Col_H1 = Min + rand() % Max/2;
-                    Mix_PlayMusic(nen_nhac, -1);
-                }
-                if (again)
-                    playerVelocity = jumpForce;
-                    if(va_amthanh)
-                    Mix_PlayChannel(-1, nhay, 0);
+                trongGame();
             }
         }
-        if (vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1)) {
-            if(va_amthanh){
-                Mix_PlayChannel(-1, va, 0);
-            }
-            va_amthanh = false;
-            again = false;
-            xoa = true;
-            Mix_HaltMusic();
-            if (score > scoreMax) {
-                scoreMax = score;
-                saveHighestScore(scoreMax); // Save the new highest score to the file
-            }
-        }
-        if(playerX + playerW >= Col_X && playerX <= Col_X + Col_W){
-            if(!vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1) && cd1 )
-                score++;
-                if(cd1){Mix_PlayChannel(-1, congdiem, 0);}
-                cd1 = false;
-        }else cd1 = true;
-        if(playerX + playerW >= Col_X1 && playerX <= Col_X1 + Col_W){
-            if(!vacham(&playerX, &playerY, &Col_X, &Col_H, &Col_X1, &Col_H1) && cd2)
-                score++;
-                if(cd2){Mix_PlayChannel(-1, congdiem, 0);}
-                cd2 = false;
-        }else cd2 = true;
+        playGame();
         SDL_RenderClear(renderer);
         if (chuyen_canh == menu) {
             hien_menu( menu, start, startRect);
@@ -135,6 +143,5 @@ void chuongtrinh(){
         }
         SDL_RenderPresent(renderer);
     }
-    
     void exit();
 }

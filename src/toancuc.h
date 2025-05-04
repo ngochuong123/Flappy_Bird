@@ -113,6 +113,7 @@ extern SDL_Texture* cotTop;
 extern SDL_Texture* cotBot;
 extern SDL_Texture* gameover;
 extern SDL_Texture* restart;
+extern SDL_Texture* dung;
 // Các biến hình chữ nhật 
 extern SDL_Rect startRect;
 extern SDL_Rect gameoverRect;
